@@ -8,25 +8,15 @@ public class AuthService
     //outputs validation of successful login
     public void login()
     {
-        System.Console.WriteLine("Email:");
-        string? email = Console.ReadLine();
-        if (!string.IsNullOrEmpty(email))
+        System.Console.WriteLine("Username:");
+        string? username = Console.ReadLine();
+        System.Console.WriteLine("Password:");
+        string? password = Console.ReadLine();
+        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
         {
-            if (authRepository.lookupUser(email))
+            if (authRepository.login(username, password))
             {
-                System.Console.WriteLine("Password:");
-                string? password = Console.ReadLine();
-                if (!string.IsNullOrEmpty(password))
-                {
-                    if (authRepository.login(email, password))
-                    {
-                        System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser().name);
-                    }
-                }
-            }
-            else
-            {
-                System.Console.WriteLine("Email not found");
+                System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser().username);
             }
         }
         else
@@ -37,6 +27,28 @@ public class AuthService
     }
     public void register()
     {
+
+        System.Console.WriteLine("Enter a Username:");
+        string? username = Console.ReadLine();
+        System.Console.WriteLine("Enter an Email:");
+        string? email = Console.ReadLine();
+        System.Console.WriteLine("Enter a Password:");
+        string? pwd = Console.ReadLine();
+        System.Console.WriteLine("Confirm Password:");
+        string? pwd_cnfm = Console.ReadLine();
+        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(pwd) && pwd.CompareTo(pwd_cnfm) == 0)
+        {
+            //TODO: check for email syntax
+            if (authRepository.register(username, email, pwd))
+            {
+                System.Console.WriteLine($"Successful Registration!");
+            }
+        }
+        else
+        {
+            System.Console.WriteLine("Invalid input");
+        }
+
 
     }
 

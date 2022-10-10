@@ -2,10 +2,11 @@
 
 AuthService authService = new AuthService();
 
-System.Console.WriteLine("Greetings user! Press [1] to login or [2] to register an account");
 int input;
+System.Console.WriteLine("Reimbursement Ticket System");
 while (authService.getCurrentUser() == null)
 {
+    System.Console.WriteLine("Press [1] to login or [2] to register an account");
     if (int.TryParse(Console.ReadLine(), out input))
     {
         switch (input)

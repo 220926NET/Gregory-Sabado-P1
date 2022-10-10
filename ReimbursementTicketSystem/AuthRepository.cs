@@ -9,9 +9,9 @@ public class AuthRepository
     {
         string email = "gregjsabado@gmail.com";
         string password = "secret";
-        string name = "Greg Sabado";
-        User me = new User(email, password, name);
-        database.Add(email, me);
+        string username = "gsabado";
+        User me = new User(email, password, username);
+        database.Add(username, me);
     }
 
     //receives user credentials
@@ -45,14 +45,25 @@ public class AuthRepository
         return current_user;
     }
 
-    public void register()
+    public bool register(string username, string email, string password)
     {
+        if (!lookupUser(username))
+        {
+            User newUser = new User(email, username, password);
+            database.Add(username, newUser);
+            return true;
+        }
+        else
+        {
+            System.Console.WriteLine("Username already exists");
+            return false;
+        }
 
     }
 
-    internal User getUser(string email)
+    internal User getUser(string username)
     {
-        return database[email];
+        return database[username];
     }
 
     internal bool lookupUser(string email)

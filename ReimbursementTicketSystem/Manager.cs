@@ -1,6 +1,6 @@
 public class Manager : Employee
 {
-    public Manager(string email, string name, string password) : base(email, name, password)
+    public Manager(string email, string username, string password) : base(email, username, password)
     {
 
     }

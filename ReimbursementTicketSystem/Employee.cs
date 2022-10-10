@@ -1,6 +1,6 @@
 public class Employee : User
 {
-    public Employee(string email, string name, string password) : base(email, name, password)
+    public Employee(string email, string username, string password) : base(email, username, password)
     {
 
     }
