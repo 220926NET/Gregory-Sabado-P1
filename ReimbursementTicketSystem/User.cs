@@ -1,5 +1,13 @@
+public enum UserPosition
+{
+    Employee, Manager
+}
+
 public class User
 {
+    public UserPosition userPosition;
+    public List<Ticket> tickets;
+
     private string _email;
     private string _username;
 
@@ -9,6 +17,7 @@ public class User
 
     public User(string email, string username, string password)
     {
+        tickets = new List<Ticket>();
         this._email = email;
         this._password = password;
         this._username = username;

@@ -8,13 +8,13 @@ public class AuthService
     //outputs validation of successful login
     public void login()
     {
-        System.Console.WriteLine("Username:");
-        string? username = Console.ReadLine();
+        System.Console.WriteLine("Email:");
+        string? email = Console.ReadLine();
         System.Console.WriteLine("Password:");
         string? password = Console.ReadLine();
-        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
         {
-            if (authRepository.login(username, password))
+            if (authRepository.login(email, password))
             {
                 System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser().username);
             }
@@ -28,10 +28,10 @@ public class AuthService
     public void register()
     {
 
-        System.Console.WriteLine("Enter a Username:");
-        string? username = Console.ReadLine();
         System.Console.WriteLine("Enter an Email:");
         string? email = Console.ReadLine();
+        System.Console.WriteLine("Enter a Username:");
+        string? username = Console.ReadLine();
         System.Console.WriteLine("Enter a Password:");
         string? pwd = Console.ReadLine();
         System.Console.WriteLine("Confirm Password:");
@@ -41,7 +41,7 @@ public class AuthService
             //TODO: check for email syntax
             if (authRepository.register(username, email, pwd))
             {
-                System.Console.WriteLine($"Successful Registration!");
+                System.Console.WriteLine($"Successful Registration! Proceed to login to access account");
             }
         }
         else

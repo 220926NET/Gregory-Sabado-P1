@@ -10,8 +10,7 @@ public class AuthRepository
         string email = "gregjsabado@gmail.com";
         string password = "secret";
         string username = "gsabado";
-        User me = new User(email, password, username);
-        database.Add(username, me);
+        createUser(email, username, password);
     }
 
     //receives user credentials
@@ -35,9 +34,24 @@ public class AuthRepository
         else
         {
             //email not found
-            System.Console.WriteLine("Email not found in database");
+            System.Console.WriteLine("Email not found");
             return false;
         }
+    }
+
+    public bool register(string username, string email, string password)
+    {
+        if (!lookupUser(email))
+        {
+            createUser(email, username, password);
+            return true;
+        }
+        else
+        {
+            System.Console.WriteLine("Account for email already exists");
+            return false;
+        }
+
     }
 
     internal User getCurrentUser()
@@ -45,25 +59,10 @@ public class AuthRepository
         return current_user;
     }
 
-    public bool register(string username, string email, string password)
-    {
-        if (!lookupUser(username))
-        {
-            User newUser = new User(email, username, password);
-            database.Add(username, newUser);
-            return true;
-        }
-        else
-        {
-            System.Console.WriteLine("Username already exists");
-            return false;
-        }
 
-    }
-
-    internal User getUser(string username)
+    internal User getUser(string email)
     {
-        return database[username];
+        return database[email];
     }
 
     internal bool lookupUser(string email)
@@ -71,9 +70,10 @@ public class AuthRepository
         return database.ContainsKey(email);
     }
 
-    internal void createUser()
+    internal void createUser(string email, string username, string password)
     {
-
+        User newUser = new User(email, username, password);
+        database.Add(email, newUser);
     }
 
     internal bool testPassword(string email, string password)
