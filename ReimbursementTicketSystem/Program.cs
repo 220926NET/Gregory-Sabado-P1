@@ -27,17 +27,22 @@ while (authService.getCurrentUser() == null)
                 break;
         }
     }
+    else
+    {
+        System.Console.WriteLine("Please input a valid integer.");
+    }
+
 }
 //  Submit Ticket/Logout?
 //  Determine whether Manager/Employee is current user
-bool Exit = false;
-User currentUser = authService.getCurrentUser();
-while (!Exit)
+bool exit = false;
+User? currentUser = authService.getCurrentUser();
+while (!exit)
 {
-    switch (currentUser.userPosition)
+    switch (currentUser?.manager)
     {
-        case UserPosition.Employee:
-            System.Console.WriteLine("Press [1] to submit a ticket, [2] to view your submitted tickets or [3] to exit");
+        case false:
+            System.Console.WriteLine("Press [1] to submit a ticket, [2] to exit");
             if (int.TryParse(Console.ReadLine(), out input))
             {
                 switch (input)
@@ -46,19 +51,20 @@ while (!Exit)
                         ticketService.Submit(currentUser);
                         break;
                     case 2:
-                        ticketService.ViewTickets(currentUser);
-                        break;
-                    case 3:
-                        Exit = true;
+                        exit = true;
                         break;
                     default:
                         System.Console.WriteLine("Invalid Input");
                         break;
                 }
             }
+            else
+            {
+                System.Console.WriteLine("Please input a valid integer.");
+            }
             break;
-        case UserPosition.Manager:
-            System.Console.WriteLine("Press [1] to submit a ticket, [2] to view your submitted tickets, [3] to approve submitted tickets or [4] to exit");
+        case true:
+            System.Console.WriteLine("Press [1] to submit a ticket, [2] to approve/deny submitted tickets or [3] to exit");
             if (int.TryParse(Console.ReadLine(), out input))
             {
                 switch (input)
@@ -70,11 +76,16 @@ while (!Exit)
                         ticketService.ViewTickets(currentUser);
                         break;
                     case 3:
-                        Exit = true;
+                        exit = true;
                         break;
                     default:
+                        System.Console.WriteLine("Invalid input.");
                         break;
                 }
+            }
+            else
+            {
+                System.Console.WriteLine("Please input a valid integer.");
             }
             break;
     }

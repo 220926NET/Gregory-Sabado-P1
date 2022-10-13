@@ -16,7 +16,7 @@ public class AuthService
         {
             if (authRepository.login(email, password))
             {
-                System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser().username);
+                System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser()?.username);
             }
         }
         else
@@ -52,7 +52,7 @@ public class AuthService
 
     }
 
-    public User getCurrentUser()
+    public User? getCurrentUser()
     {
         return authRepository.getCurrentUser();
     }

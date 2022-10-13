@@ -1,26 +1,25 @@
-public enum UserPosition
-{
-    Employee, Manager
-}
 
 public class User
 {
-    public UserPosition userPosition;
-    public List<Ticket> tickets;
+    public bool manager;
 
+    private int _id;
+    public int id { get => _id; }
     private string _email;
     private string _username;
 
     public string username { get => _username; }
 
+
     private string _password;
 
-    public User(string email, string username, string password)
+    public User(int id, string email, string username, string password, bool manager)
     {
-        tickets = new List<Ticket>();
+        this._id = id;
         this._email = email;
         this._password = password;
         this._username = username;
+        this.manager = manager;
     }
 
     internal bool testPassword(string password)
