@@ -14,7 +14,7 @@ public class AuthRepository
 
     //receives user credentials
     //returns validation of successful login
-    public bool login(string email, string password)
+    internal bool login(string email, string password)
     {
         if (lookupUser(email))
         {
@@ -38,7 +38,7 @@ public class AuthRepository
         }
     }
 
-    public bool register(string username, string email, string password)
+    internal bool register(string username, string email, string password)
     {
         if (!lookupUser(email))
         {
@@ -80,7 +80,7 @@ public class AuthRepository
                 user = new User(id, email, username, password, false);
 
         }
-
+        cmd.Dispose();
         conn.Close();
     }
 
@@ -90,6 +90,8 @@ public class AuthRepository
         SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM users WHERE (email = @email)", conn);
         cmd.Parameters.AddWithValue("@email", email);
         int UserExist = (int)cmd.ExecuteScalar();
+
+        cmd.Dispose();
         conn.Close();
 
         return (UserExist > 0) ? true : false;
@@ -106,6 +108,7 @@ public class AuthRepository
 
         cmd.ExecuteNonQuery();
 
+        cmd.Dispose();
         conn.Close();
     }
 
@@ -116,6 +119,8 @@ public class AuthRepository
         cmd.Parameters.AddWithValue("@email", email);
         cmd.Parameters.AddWithValue("@password_hash", GetHashString(password));
         int UserExist = (int)cmd.ExecuteScalar();
+
+        cmd.Dispose();
         conn.Close();
 
         return (UserExist > 0) ? true : false;

@@ -13,16 +13,17 @@ public class Ticket
 
     private string desc;
 
-    private int owner_id;
+    private int _owner_id;
+    public int owner_id { get => _owner_id; }
 
 
-    public Ticket(int id, decimal amount, string desc, int owner_id)
+    public Ticket(int id, decimal amount, string desc, int owner_id, Status status)
     {
         this._id = id;
         this.amount = amount;
         this.desc = desc;
-        this.owner_id = owner_id;
-        this._status = Status.Pending;
+        this._owner_id = owner_id;
+        this._status = status;
     }
 
     internal bool Approve()

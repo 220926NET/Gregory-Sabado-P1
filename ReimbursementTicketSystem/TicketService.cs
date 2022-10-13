@@ -1,11 +1,11 @@
 public class TicketService
 {
     private TicketRepository tr = new TicketRepository();
-    public void Submit(User currentUser)
+    internal void Submit(User currentUser)
     {
         System.Console.WriteLine("Enter amount to be reimbursed:");
-        int amount;
-        if (int.TryParse(Console.ReadLine(), out amount))
+        decimal amount;
+        if (decimal.TryParse(Console.ReadLine(), out amount))
         {
             System.Console.WriteLine("Enter description for ticket:");
             string? desc = Console.ReadLine();
@@ -27,11 +27,11 @@ public class TicketService
 
     }
 
-    public void ViewTickets(User user)
+    internal void ApproveTickets(User user)
     {
         if (user.manager)
         {
-            Queue<Ticket> tickets = tr.GetSubmittedTickets();
+            Queue<Ticket> tickets = tr.GetPendingTickets();
             List<Ticket> reviewed = new List<Ticket>();
             Ticket? next;
             bool exit = false;
@@ -77,9 +77,17 @@ public class TicketService
         }
     }
 
-    public void UpdateTickets(List<Ticket> tickets)
+    internal void ViewSubmittedTickets(User currentUser)
+    {
+        List<Ticket> tickets = tr.GetSubmittedTickets(currentUser);
+        foreach (Ticket ticket in tickets)
+        {
+            System.Console.WriteLine(ticket);
+        }
+    }
+
+    internal void UpdateTickets(List<Ticket> tickets)
     {
         tr.UpdateTickets(tickets);
-
     }
 }

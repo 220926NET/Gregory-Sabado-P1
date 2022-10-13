@@ -42,7 +42,7 @@ while (!exit)
     switch (currentUser?.manager)
     {
         case false:
-            System.Console.WriteLine("Press [1] to submit a ticket, [2] to exit");
+            System.Console.WriteLine("Press [1] to submit a ticket, [2] to view submitted tickets, or [3] to exit");
             if (int.TryParse(Console.ReadLine(), out input))
             {
                 switch (input)
@@ -51,6 +51,9 @@ while (!exit)
                         ticketService.Submit(currentUser);
                         break;
                     case 2:
+                        ticketService.ViewSubmittedTickets(currentUser);
+                        break;
+                    case 3:
                         exit = true;
                         break;
                     default:
@@ -64,7 +67,7 @@ while (!exit)
             }
             break;
         case true:
-            System.Console.WriteLine("Press [1] to submit a ticket, [2] to approve/deny submitted tickets or [3] to exit");
+            System.Console.WriteLine("Press [1] to submit a ticket, [2] to view submitted tickets, [3] to approve/deny submitted tickets or [4] to exit");
             if (int.TryParse(Console.ReadLine(), out input))
             {
                 switch (input)
@@ -73,9 +76,12 @@ while (!exit)
                         ticketService.Submit(currentUser);
                         break;
                     case 2:
-                        ticketService.ViewTickets(currentUser);
+                        ticketService.ViewSubmittedTickets(currentUser);
                         break;
                     case 3:
+                        ticketService.ApproveTickets(currentUser);
+                        break;
+                    case 4:
                         exit = true;
                         break;
                     default:
