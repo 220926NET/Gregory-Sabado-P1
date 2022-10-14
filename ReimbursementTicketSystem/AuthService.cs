@@ -6,26 +6,29 @@ public class AuthService
 
     //prompts user input
     //outputs validation of successful login
-    public void login()
+    public User? Login()
     {
-        System.Console.WriteLine("Email:");
+        System.Console.WriteLine("Email/Username:");
         string? email = Console.ReadLine();
         System.Console.WriteLine("Password:");
         string? password = Console.ReadLine();
         if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
         {
-            if (authRepository.login(email, password))
+            User? user = authRepository.Login(email, password);
+            if (user != null)
             {
-                System.Console.WriteLine("Successful login! Hello {0}", getCurrentUser()?.username);
+                System.Console.WriteLine("Successful login! Hello {0}", user.username);
+                return user;
             }
         }
         else
         {
             System.Console.WriteLine("Invalid input");
         }
+        return null;
 
     }
-    public void register()
+    public void Register()
     {
 
         System.Console.WriteLine("Enter an Email:");
@@ -33,13 +36,12 @@ public class AuthService
         System.Console.WriteLine("Enter a Username:");
         string? username = Console.ReadLine();
         System.Console.WriteLine("Enter a Password:");
-        string? pwd = Console.ReadLine();
+        string? password = Console.ReadLine();
         System.Console.WriteLine("Confirm Password:");
-        string? pwd_cnfm = Console.ReadLine();
-        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(pwd) && pwd.CompareTo(pwd_cnfm) == 0)
+        string? confirm = Console.ReadLine();
+        if (CheckRegistrationInfo(email, username, password, confirm))
         {
-            //TODO: check for email syntax
-            if (authRepository.register(username, email, pwd))
+            if (authRepository.Register(username!, email!, password!))
             {
                 System.Console.WriteLine($"Successful Registration! Proceed to login to access account");
             }
@@ -52,9 +54,14 @@ public class AuthService
 
     }
 
-    public User? getCurrentUser()
+
+    public bool CheckRegistrationInfo(string? email, string? username, string? password, string? confirm)
     {
-        return authRepository.getCurrentUser();
+        return !string.IsNullOrEmpty(username)
+               && !string.IsNullOrEmpty(email)
+               && !string.IsNullOrEmpty(password)
+               && !string.IsNullOrEmpty(confirm)
+               && password.CompareTo(confirm) == 0;
     }
 
 }

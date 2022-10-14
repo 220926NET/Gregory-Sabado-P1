@@ -4,7 +4,6 @@
 
 public class AuthRepository
 {
-    private User? current_user;
     private SqlConnection conn = new SqlConnection("Server=tcp:gjs-revature.database.windows.net,1433;Initial Catalog=TRS_DB;Persist Security Info=False;User ID=gjs-admin;Password=secret@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     public AuthRepository()
@@ -14,35 +13,34 @@ public class AuthRepository
 
     //receives user credentials
     //returns validation of successful login
-    internal bool login(string email, string password)
+    internal User? Login(string input, string password)
     {
-        if (lookupUser(email))
+        if (LookupUser(input))
         {
-            if (testPassword(email, password))
+            if (TestPassword(input, password))
             {
-                getUser(email, out current_user);
-                return true;
+                return GetUser(input);
             }
             else
             {
                 //password incorrect
                 System.Console.WriteLine("Password incorrect");
-                return false;
+                return null;
             }
         }
         else
         {
             //email not found
             System.Console.WriteLine("Email not found");
-            return false;
+            return null;
         }
     }
 
-    internal bool register(string username, string email, string password)
+    internal bool Register(string username, string email, string password)
     {
-        if (!lookupUser(email))
+        if (!LookupUser(email))
         {
-            createUser(email, username, password);
+            CreateUser(email, username, password);
             return true;
         }
         else
@@ -53,19 +51,16 @@ public class AuthRepository
 
     }
 
-    internal User? getCurrentUser()
-    {
-        return current_user;
-    }
 
 
-    private void getUser(string email, out User? user)
+    private User? GetUser(string input)
     {
-        user = null;
+        User? user = null;
         conn.Open();
-        string sql = "SELECT * FROM users WHERE email=@email";
+        string sql = "SELECT * FROM users WHERE email=@email OR username=@username";
         SqlCommand cmd = new SqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@email", email);
+        cmd.Parameters.AddWithValue("@email", input);
+        cmd.Parameters.AddWithValue("@username", input);
 
         SqlDataReader dataReader = cmd.ExecuteReader();
         while (dataReader.Read())
@@ -75,20 +70,22 @@ public class AuthRepository
             Boolean manager = dataReader.GetBoolean(3);
             string password = dataReader.GetString(4);
             if (manager)
-                user = new User(id, email, username, password, true);
+                user = new User(id, input, username, password, true);
             else
-                user = new User(id, email, username, password, false);
+                user = new User(id, input, username, password, false);
 
         }
         cmd.Dispose();
         conn.Close();
+        return user;
     }
 
-    private bool lookupUser(string email)
+    private bool LookupUser(string input)
     {
         conn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM users WHERE (email = @email)", conn);
-        cmd.Parameters.AddWithValue("@email", email);
+        SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM users WHERE (email = @email OR username=@username)", conn);
+        cmd.Parameters.AddWithValue("@email", input);
+        cmd.Parameters.AddWithValue("@username", input);
         int UserExist = (int)cmd.ExecuteScalar();
 
         cmd.Dispose();
@@ -97,7 +94,7 @@ public class AuthRepository
         return (UserExist > 0) ? true : false;
     }
 
-    private void createUser(string email, string username, string password)
+    private void CreateUser(string email, string username, string password)
     {
         conn.Open();
         string sql = "insert into users (email, username, user_position, password_hash) values(@email, @username, 0, @password)";
@@ -112,11 +109,13 @@ public class AuthRepository
         conn.Close();
     }
 
-    private bool testPassword(string email, string password)
+    private bool TestPassword(string input, string password)
     {
         conn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM users WHERE (email = @email and password_hash=@password_hash)", conn);
-        cmd.Parameters.AddWithValue("@email", email);
+        string sql = "SELECT COUNT(*) FROM users WHERE ((email = @email OR username=@username) and password_hash=@password_hash)";
+        SqlCommand cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@email", input);
+        cmd.Parameters.AddWithValue("@username", input);
         cmd.Parameters.AddWithValue("@password_hash", GetHashString(password));
         int UserExist = (int)cmd.ExecuteScalar();
 

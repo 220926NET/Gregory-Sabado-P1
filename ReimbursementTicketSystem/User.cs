@@ -21,10 +21,4 @@ public class User
         this._username = username;
         this.manager = manager;
     }
-
-    internal bool testPassword(string password)
-    {
-        return this._password.Equals(password);
-    }
-
 }

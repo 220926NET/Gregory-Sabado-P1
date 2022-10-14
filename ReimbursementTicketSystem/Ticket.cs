@@ -3,10 +3,20 @@ public enum Status
     Pending, Approved, Denied
 }
 
+public enum ReimbursementType
+{
+    Travel,
+    Lodging,
+    Food,
+    Other
+}
+
 public class Ticket
 {
     private Status _status;
     public Status status { get => _status; }
+
+    private ReimbursementType reimbursementType = ReimbursementType.Other;
     private decimal amount;
     private int _id;
     public int id { get => _id; }
@@ -17,7 +27,7 @@ public class Ticket
     public int owner_id { get => _owner_id; }
 
 
-    public Ticket(int id, decimal amount, string desc, int owner_id, Status status)
+    public Ticket(int id, decimal amount, string desc, int owner_id, Status status = Status.Pending, ReimbursementType reimbursementType = ReimbursementType.Other)
     {
         this._id = id;
         this.amount = amount;
@@ -49,7 +59,7 @@ public class Ticket
 
     public override string ToString()
     {
-        return $"ID: {this._id}\tAmount: {this.amount}\tDescription: {this.desc}\tStatus: {this.status}";
+        return $"ID: {this._id}\tAmount: {this.amount.ToString("C")}\tType: {this.reimbursementType}\tDescription: {this.desc}\tStatus: {this.status}";
     }
 
 

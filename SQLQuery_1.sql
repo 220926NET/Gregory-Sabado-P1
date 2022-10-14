@@ -22,8 +22,14 @@
 --     foreign key(owner_id) REFERENCES users(id),
 -- )
 
+-- create PROCEDURE display_all_tables
+-- as
+-- SELECT *
+-- FROM users
+-- select *
+-- from tickets
+-- GO;
 
-SELECT *
-FROM users;
-select *
-from tickets;
+-- drop PROCEDURE display_all_tables
+
+exec display_all_tables;
