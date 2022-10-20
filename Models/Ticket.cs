@@ -14,7 +14,7 @@ public enum ReimbursementType
 public class Ticket
 {
     private Status _status;
-    public Status status { get => _status; }
+    public Status status { get => _status; set => _status = value; }
 
     private ReimbursementType reimbursementType = ReimbursementType.Other;
     private decimal amount;
@@ -34,27 +34,6 @@ public class Ticket
         this.desc = desc;
         this._owner_id = owner_id;
         this._status = status;
-    }
-
-    internal bool Approve()
-    {
-        if (this.status == Status.Pending)
-        {
-            System.Console.WriteLine("Approved!");
-            this._status = Status.Approved;
-            return true;
-        }
-        return false;
-    }
-    internal bool Deny()
-    {
-        if (this.status == Status.Pending)
-        {
-            System.Console.WriteLine("Denied!");
-            this._status = Status.Denied;
-            return true;
-        }
-        return false;
     }
 
     public override string ToString()

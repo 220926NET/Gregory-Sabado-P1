@@ -1,7 +1,12 @@
 public class TicketService
 {
-    private TicketRepository tr = new TicketRepository();
-    internal void Submit(User currentUser)
+    private TicketRepository tr;
+
+    public TicketService()
+    {
+        this.tr = new TicketRepository();
+    }
+    public void Submit(User currentUser)
     {
         System.Console.WriteLine("Enter amount to be reimbursed:");
         decimal amount;
@@ -27,7 +32,7 @@ public class TicketService
 
     }
 
-    internal void ApproveTickets(User user)
+    public void ApproveTickets(User user)
     {
         if (user.manager)
         {
@@ -45,11 +50,11 @@ public class TicketService
                     switch (input)
                     {
                         case 1:
-                            next.Approve();
+                            ApproveTicket(next);
                             reviewed.Add(tickets.Dequeue());
                             break;
                         case 2:
-                            next.Deny();
+                            DenyTicket(next);
                             reviewed.Add(tickets.Dequeue());
                             break;
                         case 3:
@@ -77,7 +82,7 @@ public class TicketService
         }
     }
 
-    internal void ViewSubmittedTickets(User currentUser)
+    public void ViewSubmittedTickets(User currentUser)
     {
         List<Ticket> tickets = tr.GetSubmittedTickets(currentUser);
         foreach (Ticket ticket in tickets)
@@ -90,4 +95,28 @@ public class TicketService
     {
         tr.UpdateTickets(tickets);
     }
+
+
+    bool ApproveTicket(Ticket ticket)
+    {
+        if (ticket.status == Status.Pending)
+        {
+            System.Console.WriteLine("Approved!");
+            ticket.status = Status.Approved;
+            return true;
+        }
+        return false;
+    }
+    bool DenyTicket(Ticket ticket)
+    {
+        if (ticket.status == Status.Pending)
+        {
+            System.Console.WriteLine("Denied!");
+            ticket.status = Status.Denied;
+            return true;
+        }
+        return false;
+    }
+
+
 }

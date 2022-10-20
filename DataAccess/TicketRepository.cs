@@ -1,9 +1,16 @@
+using Microsoft.Data.SqlClient;
+
 public class TicketRepository
 {
     //id of ticket, and the ticket
-    private SqlConnection conn = new SqlConnection("Server=tcp:gjs-revature.database.windows.net,1433;Initial Catalog=TRS_DB;Persist Security Info=False;User ID=gjs-admin;Password=secret@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+    private SqlConnection conn;
 
-    internal int Submit(decimal amount, string desc, User owner)
+    public TicketRepository()
+    {
+        conn = new SqlConnection("Server=tcp:gjs-revature.database.windows.net,1433;Initial Catalog=TRS_DB;Persist Security Info=False;User ID=gjs-admin;Password=secret@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+    }
+
+    public int Submit(decimal amount, string desc, User owner)
     {
         int id = -1;
         conn.Open();
@@ -23,7 +30,7 @@ public class TicketRepository
         return id;
     }
 
-    internal Queue<Ticket> GetPendingTickets()
+    public Queue<Ticket> GetPendingTickets()
     {
         Queue<Ticket> tickets = new Queue<Ticket>();
 
@@ -50,7 +57,7 @@ public class TicketRepository
         return tickets;
     }
 
-    internal void UpdateTickets(List<Ticket> tickets)
+    public void UpdateTickets(List<Ticket> tickets)
     {
         conn.Open();
         string sql = "update tickets set status=@status where id=@id";
@@ -66,7 +73,7 @@ public class TicketRepository
     }
 
 
-    internal List<Ticket> GetSubmittedTickets(User user)
+    public List<Ticket> GetSubmittedTickets(User user)
     {
         List<Ticket> tickets = new List<Ticket>();
 

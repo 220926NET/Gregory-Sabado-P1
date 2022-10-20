@@ -1,6 +1,7 @@
 //handles looking up stuff in database
-
-
+using Microsoft.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
 public class AuthRepository
 {
@@ -13,7 +14,7 @@ public class AuthRepository
 
     //receives user credentials
     //returns validation of successful login
-    internal User? Login(string input, string password)
+    public User? Login(string input, string password)
     {
         if (LookupUser(input))
         {
@@ -36,7 +37,7 @@ public class AuthRepository
         }
     }
 
-    internal bool Register(string username, string email, string password)
+    public bool Register(string username, string email, string password)
     {
         if (!LookupUser(email))
         {
