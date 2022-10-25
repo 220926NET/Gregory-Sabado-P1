@@ -3,27 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-ReimbursementTicketSystem", "api-ExpenseReimbursement\api-ReimbursementTicketSystem.csproj", "{94511DF0-B3B5-4841-89B9-C2DA0ADD036A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{4FE407B0-F750-42AF-A216-01CF0EEAC69F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{4FE407B0-F750-42AF-A216-01CF0EEAC69F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3AD5DD67-9305-4E9C-8617-54BDB3D8F579}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3AD5DD67-9305-4E9C-8617-54BDB3D8F579}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{5B8D2EFF-DCEF-4C40-9521-1EC6D740640F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{5B8D2EFF-DCEF-4C40-9521-1EC6D740640F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api-ReimbursementTicket", "api-ReimbursementTicket\api-ReimbursementTicket.csproj", "{0766BB73-62A2-40A5-9D0C-718EF0BED1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94511DF0-B3B5-4841-89B9-C2DA0ADD036A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94511DF0-B3B5-4841-89B9-C2DA0ADD036A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94511DF0-B3B5-4841-89B9-C2DA0ADD036A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94511DF0-B3B5-4841-89B9-C2DA0ADD036A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FE407B0-F750-42AF-A216-01CF0EEAC69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FE407B0-F750-42AF-A216-01CF0EEAC69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FE407B0-F750-42AF-A216-01CF0EEAC69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +29,15 @@ Global
 		{5B8D2EFF-DCEF-4C40-9521-1EC6D740640F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B8D2EFF-DCEF-4C40-9521-1EC6D740640F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B8D2EFF-DCEF-4C40-9521-1EC6D740640F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0766BB73-62A2-40A5-9D0C-718EF0BED1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0766BB73-62A2-40A5-9D0C-718EF0BED1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0766BB73-62A2-40A5-9D0C-718EF0BED1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0766BB73-62A2-40A5-9D0C-718EF0BED1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DC44785-8585-4294-AA2D-5312B6CBF62B}
 	EndGlobalSection
 EndGlobal

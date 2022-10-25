@@ -1,3 +1,7 @@
+using Models;
+using DataAccess;
+using BusinessLogic;
+using System;
 public class MenuService
 {
     /// <summary>
@@ -25,8 +29,14 @@ public class MenuService
     /// <returns>User object</returns>
     internal User? LoginMenu()
     {
-        AuthService authService = new AuthService();
-        User? user = authService.Login();
+        User user = new();
+        AuthService authService = new AuthService(new AuthRepository());
+        System.Console.WriteLine("Username:");
+        string? username = Console.ReadLine();
+        System.Console.WriteLine("Password:");
+        string? password = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            user = authService.Login(username, password);
 
         return user;
     }
@@ -36,8 +46,13 @@ public class MenuService
     /// </summary>
     internal void RegisterMenu()
     {
-        AuthService authService = new AuthService();
-        authService.Register();
+        AuthService authService = new AuthService(new AuthRepository());
+        System.Console.WriteLine("Username:");
+        string? username = Console.ReadLine();
+        System.Console.WriteLine("Password:");
+        string? password = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            authService.Register(username, password);
     }
 
     /// <summary>

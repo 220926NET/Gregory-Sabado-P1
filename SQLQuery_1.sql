@@ -1,16 +1,3 @@
--- CREATE TABLE users
--- (
---     id INT PRIMARY KEY IDENTITY,
---     email NVARCHAR(MAX) NOT NULL,
---     username NVARCHAR(MAX),
---     password_hash NVARCHAR(MAX) NOT NULL,
---     user_position BIT DEFAULT 0
--- );
-
--- alter TABLE users
--- set
-
-
 -- CREATE TABLE tickets
 -- (
 --     [id] int IDENTITY,
@@ -32,4 +19,11 @@
 
 -- drop PROCEDURE display_all_tables
 
+UPDATE users set manager=1 where id=3;
+
 exec display_all_tables;
+
+delete from users;
+
+-- DELETE FROM users;
+DELETE FROM tickets;

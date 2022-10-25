@@ -1,67 +1,49 @@
 //handles interactions with user, and authrepository i.e. prompting user to login then sending login info to authrepository
 
-public class AuthService
+using Models;
+using DataAccess;
+
+namespace BusinessLogic;
+
+public interface IAuthService
 {
-    private AuthRepository authRepository = new AuthRepository();
+    User Login(string username, string password);
+    int Register(string username, string password);
+
+    User GetUser(int id);
+
+}
+public class AuthService : IAuthService
+{
+    private IAuthRepository authRepository;
+
+    public AuthService(IAuthRepository authRepository)
+    {
+        this.authRepository = authRepository;
+    }
+
+    public User GetUser(int id)
+    {
+        return authRepository.GetUser(id);
+    }
 
     //prompts user input
     //outputs validation of successful login
-    public User? Login()
+    public User Login(string username, string password)
     {
-        System.Console.WriteLine("Email/Username:");
-        string? email = Console.ReadLine();
-        System.Console.WriteLine("Password:");
-        string? password = Console.ReadLine();
-        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+        User user = new();
+        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
         {
-            User? user = authRepository.Login(email, password);
-            if (user != null)
-            {
-                System.Console.WriteLine("Successful login! Hello {0}", user.username);
-                return user;
-            }
+            user = authRepository.GetUser(username, password);
         }
-        else
-        {
-            System.Console.WriteLine("Invalid input");
-        }
-        return null;
-
+        return user;
     }
-    public void Register()
+    public int Register(string username, string password)
     {
-
-        System.Console.WriteLine("Enter an Email:");
-        string? email = Console.ReadLine();
-        System.Console.WriteLine("Enter a Username:");
-        string? username = Console.ReadLine();
-        System.Console.WriteLine("Enter a Password:");
-        string? password = Console.ReadLine();
-        System.Console.WriteLine("Confirm Password:");
-        string? confirm = Console.ReadLine();
-        if (CheckRegistrationInfo(email, username, password, confirm))
-        {
-            if (authRepository.Register(username!, email!, password!))
-            {
-                System.Console.WriteLine($"Successful Registration! Proceed to login to access account");
-            }
-        }
-        else
-        {
-            System.Console.WriteLine("Invalid input");
-        }
-
-
+        return authRepository.CreateUser(username, password);
     }
 
 
-    public bool CheckRegistrationInfo(string? email, string? username, string? password, string? confirm)
-    {
-        return !string.IsNullOrEmpty(username)
-               && !string.IsNullOrEmpty(email)
-               && !string.IsNullOrEmpty(password)
-               && !string.IsNullOrEmpty(confirm)
-               && password.CompareTo(confirm) == 0;
-    }
 
 }
+
