@@ -4,9 +4,13 @@ using BusinessLogic;
 
 namespace api_ExpenseReimbursement.Controllers
 {
+
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         IAuthService authService;
+
+
         public UserController(IAuthService authService)
         {
             this.authService = authService;

@@ -4,6 +4,8 @@ using Models;
 using BusinessLogic;
 namespace api_ReimbursementTicketSystem.Controllers
 {
+
+    [Route("api/[controller]")]
     public class TicketController : ControllerBase
     {
         private ITicketService ticketService;
@@ -16,7 +18,7 @@ namespace api_ReimbursementTicketSystem.Controllers
 
 
         [HttpPost]
-        [Route("tickets/")]
+        [Route("submit/")]
         public ActionResult Submit(Ticket ticket)
         {
             if (ticket.amount <= 0m)
